@@ -53,7 +53,7 @@ export const DashboardPage: React.FC = () => {
   const API_URL = useApiUrl();
 
   const [selecetedDateFilter, setSelectedDateFilter] = useState<DateFilter>(
-    DATE_FILTERS.lastWeek.value,
+    DATE_FILTERS.lastWeek.value
   );
 
   const dateFilters: MenuProps["items"] = useMemo(() => {
@@ -198,7 +198,7 @@ export const DashboardPage: React.FC = () => {
         <Dropdown menu={{ items: dateFilters }}>
           <Button>
             {t(
-              `dashboard.filter.date.${DATE_FILTERS[selecetedDateFilter].text}`,
+              `dashboard.filter.date.${DATE_FILTERS[selecetedDateFilter].text}`
             )}
             <DownOutlined />
           </Button>
@@ -290,46 +290,7 @@ export const DashboardPage: React.FC = () => {
             </Col>
           </Row>
         </Col>
-        <Col xl={15} lg={15} md={24} sm={24} xs={24}>
-          <CardWithContent
-            bodyStyles={{
-              height: "432px",
-              overflow: "hidden",
-              padding: 0,
-            }}
-            icon={
-              <ClockCircleOutlined
-                style={{
-                  fontSize: 14,
-                  color: token.colorPrimary,
-                }}
-              />
-            }
-            title={t("dashboard.deliveryMap.title")}
-          >
-            <AllOrdersMap />
-          </CardWithContent>
-        </Col>
-        <Col xl={9} lg={9} md={24} sm={24} xs={24}>
-          <CardWithContent
-            bodyStyles={{
-              height: "430px",
-              overflow: "hidden",
-              padding: 0,
-            }}
-            icon={
-              <ClockCircleOutlined
-                style={{
-                  fontSize: 14,
-                  color: token.colorPrimary,
-                }}
-              />
-            }
-            title={t("dashboard.timeline.title")}
-          >
-            <OrderTimeline height={"432px"} />
-          </CardWithContent>
-        </Col>
+
         <Col xl={15} lg={15} md={24} sm={24} xs={24}>
           <CardWithContent
             bodyStyles={{
@@ -351,19 +312,21 @@ export const DashboardPage: React.FC = () => {
         <Col xl={9} lg={9} md={24} sm={24} xs={24}>
           <CardWithContent
             bodyStyles={{
+              height: "442px",
+              overflow: "hidden",
               padding: 0,
             }}
             icon={
-              <RiseOutlined
+              <ClockCircleOutlined
                 style={{
                   fontSize: 14,
                   color: token.colorPrimary,
                 }}
               />
             }
-            title={t("dashboard.trendingProducts.title")}
+            title={t("dashboard.timeline.title")}
           >
-            <TrendingMenu />
+            <OrderTimeline height={"442px"} />
           </CardWithContent>
         </Col>
       </Row>

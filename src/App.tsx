@@ -1,55 +1,42 @@
-import React from "react";
+import {
+  ErrorComponent,
+  ThemedLayoutV2,
+  useNotificationProvider,
+} from "@refinedev/antd";
 import { Authenticated, Refine } from "@refinedev/core";
 import { RefineKbarProvider } from "@refinedev/kbar";
-import {
-  useNotificationProvider,
-  ThemedLayoutV2,
-  ErrorComponent,
-} from "@refinedev/antd";
 import routerProvider, {
   CatchAllNavigate,
+  DocumentTitleHandler,
   NavigateToResource,
   UnsavedChangesNotifier,
-  DocumentTitleHandler,
 } from "@refinedev/react-router-v6";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import {
-  ShoppingOutlined,
-  ShopOutlined,
-  DashboardOutlined,
-  UserOutlined,
-  UnorderedListOutlined,
-  TagsOutlined,
-} from "@ant-design/icons";
 import jsonServerDataProvider from "@refinedev/simple-rest";
+import React from "react";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { authProvider } from "./authProvider";
 
 import "dayjs/locale/de";
 
-import { DashboardPage } from "./pages/dashboard";
-import { OrderList, OrderShow } from "./pages/orders";
-import { AuthPage } from "./pages/auth";
-import { CustomerShow, CustomerList } from "./pages/customers";
-import { CourierList, CourierCreate, CourierEdit } from "./pages/couriers";
-import {
-  ProductList,
-  ProductCreate,
-  ProductEdit,
-  ProductShow,
-} from "./pages/products";
-import { StoreCreate, StoreEdit, StoreList } from "./pages/stores";
-import { CategoryList } from "./pages/categories";
 import { useTranslation } from "react-i18next";
 import { Header, Title } from "./components";
-import { BikeWhiteIcon } from "./components/icons";
 import { ConfigProvider } from "./context";
 import { useAutoLoginForDemo } from "./hooks";
+import { AuthPage } from "./pages/auth";
+import { CourierCreate, CourierEdit, CourierList } from "./pages/couriers";
+import { DashboardPage } from "./pages/dashboard";
+import { OrderList, OrderShow } from "./pages/orders";
+import {
+  ProductCreate,
+  ProductEdit,
+  ProductList,
+  ProductShow,
+} from "./pages/products";
 
 import "@refinedev/antd/dist/reset.css";
+import { resources } from "./config/resources";
 
 const App: React.FC = () => {
-  // This hook is used to automatically login the user.
-  // We use this hook to skip the login page and demonstrate the application more quickly.
   const { loading } = useAutoLoginForDemo();
 
   const API_URL = "https://api.finefoods.refine.dev";
@@ -81,68 +68,7 @@ const App: React.FC = () => {
               warnWhenUnsavedChanges: true,
             }}
             notificationProvider={useNotificationProvider}
-            resources={[
-              {
-                name: "dashboard",
-                list: "/",
-                meta: {
-                  label: "Dashboard",
-                  icon: <DashboardOutlined />,
-                },
-              },
-              {
-                name: "orders",
-                list: "/orders",
-                show: "/orders/:id",
-                meta: {
-                  icon: <ShoppingOutlined />,
-                },
-              },
-              {
-                name: "users",
-                list: "/customers",
-                show: "/customers/:id",
-                meta: {
-                  icon: <UserOutlined />,
-                },
-              },
-              {
-                name: "products",
-                list: "/products",
-                create: "/products/new",
-                edit: "/products/:id/edit",
-                show: "/products/:id",
-                meta: {
-                  icon: <UnorderedListOutlined />,
-                },
-              },
-              {
-                name: "categories",
-                list: "/categories",
-                meta: {
-                  icon: <TagsOutlined />,
-                },
-              },
-              {
-                name: "stores",
-                list: "/stores",
-                create: "/stores/new",
-                edit: "/stores/:id/edit",
-                meta: {
-                  icon: <ShopOutlined />,
-                },
-              },
-              {
-                name: "couriers",
-                list: "/couriers",
-                create: "/couriers/new",
-                edit: "/couriers/:id/edit",
-                show: "/couriers/:id",
-                meta: {
-                  icon: <BikeWhiteIcon />,
-                },
-              },
-            ]}
+            resources={resources}
           >
             <Routes>
               <Route
@@ -173,17 +99,6 @@ const App: React.FC = () => {
                 </Route>
 
                 <Route
-                  path="/customers"
-                  element={
-                    <CustomerList>
-                      <Outlet />
-                    </CustomerList>
-                  }
-                >
-                  <Route path=":id" element={<CustomerShow />} />
-                </Route>
-
-                <Route
                   path="/products"
                   element={
                     <ProductList>
@@ -195,14 +110,6 @@ const App: React.FC = () => {
                   <Route path=":id" element={<ProductShow />} />
                   <Route path=":id/edit" element={<ProductEdit />} />
                 </Route>
-
-                <Route path="/stores">
-                  <Route index element={<StoreList />} />
-                  <Route path="new" element={<StoreCreate />} />
-                  <Route path=":id/edit" element={<StoreEdit />} />
-                </Route>
-
-                <Route path="/categories" element={<CategoryList />} />
 
                 <Route path="/couriers">
                   <Route

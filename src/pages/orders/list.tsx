@@ -198,7 +198,7 @@ export const OrderList = () => {
           defaultFilteredValue={getDefaultFilter(
             "store.title",
             filters,
-            "contains",
+            "contains"
           )}
           filterDropdown={(props) => (
             <FilterDropdown {...props}>
@@ -220,7 +220,7 @@ export const OrderList = () => {
           defaultFilteredValue={getDefaultFilter(
             "user.fullName",
             filters,
-            "contains",
+            "contains"
           )}
           filterDropdown={(props) => (
             <FilterDropdown {...props}>
